@@ -23,4 +23,9 @@ public class Circle extends Figure {
         return radius;
     }
 
+    @Override
+    public boolean pointBelongs(Point eventPoint) {
+        return Math.sqrt(Math.pow(getCenterPoint().getX() - eventPoint.getX(), 2) +
+                Math.pow(getCenterPoint().getY() - eventPoint.getY(), 2)) < getRadius();
+    }
 }

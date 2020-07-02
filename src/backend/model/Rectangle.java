@@ -22,4 +22,9 @@ public class Rectangle extends Figure {
         return String.format("Rectángulo [ %s , %s ]", topLeft, bottomRight);
     }
 
+    @Override
+    public boolean pointBelongs(Point eventPoint) {
+        return eventPoint.getX() > getTopLeft().getX() && eventPoint.getX() < getBottomRight().getX() &&
+                eventPoint.getY() > getTopLeft().getY() && eventPoint.getY() < getBottomRight().getY();
+    }
 }
