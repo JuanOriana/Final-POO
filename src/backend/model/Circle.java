@@ -7,6 +7,7 @@ import java.awt.*;
 public class Circle extends Ellipse {
     public Circle(Point centerPoint, double radius,Color  lineColor, Color fillColor, double lineWidth) {
         super(centerPoint,radius,radius, lineColor, fillColor, lineWidth);
+        name = "Circulo";
     }
 
     @Override
@@ -14,8 +15,9 @@ public class Circle extends Ellipse {
         return String.format("Círculo [Centro: %s, Radio: %.2f]", centerPoint, getRadius());
     }
 
+
     public double getRadius() {
-        return getRadiusA();
+        return getBRadius();
     }
 
     @Override
@@ -24,10 +26,4 @@ public class Circle extends Ellipse {
                 Math.pow(getCenterPoint().getY() - eventPoint.getY(), 2)) < getRadius();
     }
 
-    @Override
-    public void draw(GraphicsContext gc) {
-        double diameter = getRadius() * 2;
-        gc.fillOval(getCenterPoint().getX() - getRadius(), getCenterPoint().getY() - getRadius(), diameter, diameter);
-        gc.strokeOval(getCenterPoint().getX() - getRadius(), getCenterPoint().getY() - getRadius(), diameter, diameter);
-    }
 }

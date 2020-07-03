@@ -121,9 +121,9 @@ public class PaintPane extends BorderPane {
 				newFigure = new Circle(startPoint, circleRadius, lineColorPicker.getValue(), fillColorPicker.getValue(),lineSlider.getValue());
 			}
 			else if(ellipseButton.isSelected()){
-				double xAxis = Math.abs(endPoint.getX() - startPoint.getX());
-				double yAxis = Math.abs(endPoint.getY() - startPoint.getY());
-				newFigure = new Ellipse(new Point(startPoint.getX() + xAxis, startPoint.getY() + yAxis),xAxis,yAxis,
+				double aRadius = Math.abs(endPoint.getX() - startPoint.getX())/2;
+				double bRadius = Math.abs(endPoint.getY() - startPoint.getY())/2;
+				newFigure = new Ellipse(new Point(startPoint.getX() + aRadius, startPoint.getY() + bRadius), aRadius,bRadius,
 						lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
 			else if(squareButton.isSelected()){
