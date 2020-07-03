@@ -3,5 +3,9 @@ package backend.model;
 import javafx.scene.canvas.GraphicsContext;
 
 public interface Drawable {
-    void draw(GraphicsContext gc);
+
+    default void draw(GraphicsContext gc){
+        draw(gc, false);
+    }
+    void draw(GraphicsContext gc, boolean selected);
 }
