@@ -27,4 +27,10 @@ public class Rectangle extends Figure {
         return eventPoint.getX() > getTopLeft().getX() && eventPoint.getX() < getBottomRight().getX() &&
                 eventPoint.getY() > getTopLeft().getY() && eventPoint.getY() < getBottomRight().getY();
     }
+
+    @Override
+    public void move(double x, double y) {
+        topLeft.move(x,y);
+        bottomRight.move(x,y);
+    }
 }

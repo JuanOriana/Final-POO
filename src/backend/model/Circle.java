@@ -28,4 +28,9 @@ public class Circle extends Figure {
         return Math.sqrt(Math.pow(getCenterPoint().getX() - eventPoint.getX(), 2) +
                 Math.pow(getCenterPoint().getY() - eventPoint.getY(), 2)) < getRadius();
     }
+
+    @Override
+    public void move(double x, double y) {
+        centerPoint.move(x,y);
+    }
 }
