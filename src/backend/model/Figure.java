@@ -25,4 +25,15 @@ public abstract class Figure implements Movable, Drawable{
 
     }
 
+    public void setLineColor(Color lineColor) {
+        this.lineColor = lineColor;
+    }
+
+    public void setFillColor(Color fillColor) {
+        this.fillColor = fillColor;
+    }
+
+    public void setLineWidth(double lineWidth) {
+        this.lineWidth = lineWidth;
+    }
 }

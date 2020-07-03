@@ -5,6 +5,10 @@ import backend.model.Circle;
 import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Rectangle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -75,6 +79,25 @@ public class PaintPane extends BorderPane {
 		toolBox.setStyle("-fx-background-color: #999");
 		toolBox.setPrefWidth(100);
 		gc.setLineWidth(1);
+
+		fillColorPicker.setOnAction(event -> {
+			if (areSelections()){
+				selectedFigure.setFillColor(fillColorPicker.getValue());
+				redrawCanvas();
+			}
+		});
+
+		lineColorPicker.setOnAction(event -> {
+			if (areSelections()){
+				selectedFigure.setLineColor(lineColorPicker.getValue());
+				redrawCanvas();
+			}
+		});
+
+		lineSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+			selectedFigure.setLineWidth((Double) newValue);
+			redrawCanvas();
+		});
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
