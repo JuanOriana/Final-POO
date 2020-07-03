@@ -75,9 +75,11 @@ public class PaintPane extends BorderPane {
 		toolBox.setStyle("-fx-background-color: #999");
 		toolBox.setPrefWidth(100);
 		gc.setLineWidth(1);
+
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
 		});
+
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
 			if(startPoint == null) {
@@ -88,11 +90,11 @@ public class PaintPane extends BorderPane {
 			}
 			Figure newFigure;
 			if(rectangleButton.isSelected()) {
-				newFigure = new Rectangle(startPoint, endPoint);
+				newFigure = new Rectangle(startPoint, endPoint, lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
 			else if(circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
-				newFigure = new Circle(startPoint, circleRadius);
+				newFigure = new Circle(startPoint, circleRadius, lineColorPicker.getValue(), fillColorPicker.getValue(),lineSlider.getValue());
 			} else {
 				return ;
 			}
@@ -156,13 +158,8 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
-			if(figure == selectedFigure) {
-				gc.setStroke(Color.RED);
-			} else {
-				gc.setStroke(lineColor);
-			}
-			gc.setFill(fillColor);
-			figure.draw(gc);
+			boolean isSelected = figure == selectedFigure;
+			figure.draw(gc, isSelected);
 		}
 	}
 

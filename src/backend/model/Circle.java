@@ -1,13 +1,15 @@
 package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Circle extends Figure {
 
     protected final Point centerPoint;
     protected final double radius;
 
-    public Circle(Point centerPoint, double radius) {
+    public Circle(Point centerPoint, double radius, Color lineColor, Color fillColor, double lineWidth) {
+        super(lineColor, fillColor, lineWidth);
         this.centerPoint = centerPoint;
         this.radius = radius;
     }
@@ -37,7 +39,8 @@ public class Circle extends Figure {
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
+    public void draw(GraphicsContext gc, boolean selected) {
+        setForDrawing(gc,selected);
         double diameter = getRadius() * 2;
         gc.fillOval(getCenterPoint().getX() - getRadius(), getCenterPoint().getY() - getRadius(), diameter, diameter);
         gc.strokeOval(getCenterPoint().getX() - getRadius(), getCenterPoint().getY() - getRadius(), diameter, diameter);

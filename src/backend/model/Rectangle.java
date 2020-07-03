@@ -1,12 +1,14 @@
 package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Rectangle extends Figure {
 
     private final Point topLeft, bottomRight;
 
-    public Rectangle(Point topLeft, Point bottomRight) {
+    public Rectangle(Point topLeft, Point bottomRight, Color lineColor, Color fillColor, double lineWidth) {
+        super(lineColor,fillColor,lineWidth);
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
     }
@@ -37,7 +39,8 @@ public class Rectangle extends Figure {
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
+    public void draw(GraphicsContext gc, boolean selected) {
+        setForDrawing(gc,selected);
         gc.fillRect(getTopLeft().getX(), getTopLeft().getY(),
                 Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
         gc.strokeRect(getTopLeft().getX(), getTopLeft().getY(),
