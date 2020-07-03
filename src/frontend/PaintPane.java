@@ -96,8 +96,10 @@ public class PaintPane extends BorderPane {
 		});
 
 		lineSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-			selectedFigure.setLineWidth((Double) newValue);
-			redrawCanvas();
+			if (areSelections()) {
+				selectedFigure.setLineWidth((Double) newValue);
+				redrawCanvas();
+			}
 		});
 
 		canvas.setOnMousePressed(event -> {
