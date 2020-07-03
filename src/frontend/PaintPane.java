@@ -34,6 +34,7 @@ public class PaintPane extends BorderPane {
 	ToggleButton circleButton = new ToggleButton("Círculo");
 	ToggleButton ellipseButton = new ToggleButton("Elipse");
 	ToggleButton squareButton = new ToggleButton("Cuadrado");
+	ToggleButton lineButton = new ToggleButton("Linea");
 
 	// Sliders y color-pickers
 	Slider lineSlider = new Slider(1,50,1);
@@ -59,7 +60,7 @@ public class PaintPane extends BorderPane {
 		this.statusPane = statusPane;
 
 
-		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton};
+		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton, lineButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : buttonsArr) {
 			tool.setMinWidth(90);
@@ -130,6 +131,9 @@ public class PaintPane extends BorderPane {
 			}
 			else if(squareButton.isSelected()){
 				newFigure = new Square(startPoint,endPoint,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
+			}
+			else if(lineButton.isSelected()){
+				newFigure = new Line(startPoint,endPoint,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
 			else {
 				return ;
