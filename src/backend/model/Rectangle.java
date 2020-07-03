@@ -9,6 +9,7 @@ public class Rectangle extends Figure {
     public Rectangle(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
+
     }
 
     public Point getTopLeft() {
@@ -19,9 +20,13 @@ public class Rectangle extends Figure {
         return bottomRight;
     }
 
+    public String getName(){
+        return "Rectangulo";
+    }
+
     @Override
     public String toString() {
-        return String.format("Rectángulo [ %s , %s ]", topLeft, bottomRight);
+        return String.format("%s [ %s , %s ]", getName(), getTopLeft(), getBottomRight());
     }
 
     @Override

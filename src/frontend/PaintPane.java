@@ -1,10 +1,7 @@
 package frontend;
 
 import backend.CanvasState;
-import backend.model.Circle;
-import backend.model.Figure;
-import backend.model.Point;
-import backend.model.Rectangle;
+import backend.model.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -30,6 +27,8 @@ public class PaintPane extends BorderPane {
 	ToggleButton selectionButton = new ToggleButton("Seleccionar");
 	ToggleButton rectangleButton = new ToggleButton("Rectángulo");
 	ToggleButton circleButton = new ToggleButton("Círculo");
+	ToggleButton squareButton  = new ToggleButton("Cuadrado");
+	ToggleButton ellipseButton  = new ToggleButton("Elipse");
 
 	// Dibujar una figura
 	Point startPoint;
@@ -43,7 +42,7 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton};
+		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton,squareButton,ellipseButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -74,7 +73,14 @@ public class PaintPane extends BorderPane {
 			else if(circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
 				newFigure = new Circle(startPoint, circleRadius);
-			} else {
+			} else if(squareButton.isSelected()){
+				newFigure = new Square(startPoint, endPoint);
+			} else if(ellipseButton.isSelected()){
+				double radiusX = Math.abs((endPoint.getX() - startPoint.getX())/2);
+				double radiusY = Math.abs((endPoint.getY() - startPoint.getY())/2);
+				newFigure = new Ellipse(new Point(startPoint.getX() + radiusX, startPoint.getY() + radiusY),radiusX,radiusY);
+			}
+			 else {
 				return ;
 			}
 			canvasState.addFigure(newFigure);
