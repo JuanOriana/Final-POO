@@ -9,8 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -31,6 +30,15 @@ public class PaintPane extends BorderPane {
 	ToggleButton rectangleButton = new ToggleButton("Rectángulo");
 	ToggleButton circleButton = new ToggleButton("Círculo");
 
+	// Sliders y color-pickers
+	Slider lineSlider = new Slider(1,50,1);
+	ColorPicker lineColorPicker = new ColorPicker(lineColor);
+	ColorPicker fillColorPicker = new ColorPicker(fillColor);
+
+	// Labels
+	Label lineLabel = new Label("Borde");
+	Label fillLabel = new Label("Relleno");
+
 	// Dibujar una figura
 	Point startPoint;
 
@@ -40,21 +48,32 @@ public class PaintPane extends BorderPane {
 	// StatusBar
 	StatusPane statusPane;
 
+
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton};
+
+
+		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton};
 		ToggleGroup tools = new ToggleGroup();
-		for (ToggleButton tool : toolsArr) {
+		for (ToggleButton tool : buttonsArr) {
 			tool.setMinWidth(90);
 			tool.setToggleGroup(tools);
 			tool.setCursor(Cursor.HAND);
 		}
-		VBox buttonsBox = new VBox(10);
-		buttonsBox.getChildren().addAll(toolsArr);
-		buttonsBox.setPadding(new Insets(5));
-		buttonsBox.setStyle("-fx-background-color: #999");
-		buttonsBox.setPrefWidth(100);
+
+		Control[] lineTools = {lineLabel,lineSlider, lineColorPicker};
+		lineSlider.setShowTickMarks(true);
+		lineSlider.setShowTickLabels(true);
+		Control[] fillTools = {fillLabel,fillColorPicker};
+
+		VBox toolBox = new VBox(10);
+		toolBox.getChildren().addAll(buttonsArr);
+		toolBox.getChildren().addAll(lineTools);
+		toolBox.getChildren().addAll(fillTools);
+		toolBox.setPadding(new Insets(5));
+		toolBox.setStyle("-fx-background-color: #999");
+		toolBox.setPrefWidth(100);
 		gc.setLineWidth(1);
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
@@ -130,7 +149,7 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
-		setLeft(buttonsBox);
+		setLeft(toolBox);
 		setRight(canvas);
 	}
 
