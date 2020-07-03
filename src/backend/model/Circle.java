@@ -1,5 +1,7 @@
 package backend.model;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public class Circle extends Figure {
 
     protected final Point centerPoint;
@@ -32,5 +34,12 @@ public class Circle extends Figure {
     @Override
     public void move(double x, double y) {
         centerPoint.move(x,y);
+    }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+        double diameter = getRadius() * 2;
+        gc.fillOval(getCenterPoint().getX() - getRadius(), getCenterPoint().getY() - getRadius(), diameter, diameter);
+        gc.strokeOval(getCenterPoint().getX() - getRadius(), getCenterPoint().getY() - getRadius(), diameter, diameter);
     }
 }

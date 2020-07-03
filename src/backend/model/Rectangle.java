@@ -1,5 +1,7 @@
 package backend.model;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public class Rectangle extends Figure {
 
     private final Point topLeft, bottomRight;
@@ -32,5 +34,13 @@ public class Rectangle extends Figure {
     public void move(double x, double y) {
         topLeft.move(x,y);
         bottomRight.move(x,y);
+    }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+        gc.fillRect(getTopLeft().getX(), getTopLeft().getY(),
+                Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
+        gc.strokeRect(getTopLeft().getX(), getTopLeft().getY(),
+                Math.abs(getTopLeft().getX() - getBottomRight().getX()), Math.abs(getTopLeft().getY() - getBottomRight().getY()));
     }
 }
