@@ -59,7 +59,7 @@ public class PaintPane extends BorderPane {
 		this.statusPane = statusPane;
 
 
-		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton, lineButton,removeButton};
+		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton, lineButton,removeButton, backButton, frontButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : buttonsArr) {
 			tool.setMinWidth(90);
