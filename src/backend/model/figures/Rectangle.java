@@ -1,4 +1,4 @@
-package backend.model;
+package backend.model.figures;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;

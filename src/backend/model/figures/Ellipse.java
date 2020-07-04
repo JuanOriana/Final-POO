@@ -1,4 +1,4 @@
-package backend.model;
+package backend.model.figures;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -28,11 +28,12 @@ public class Ellipse extends Figure {
         return bRadius;
     }
 
-    //Pulir, usando la del rectangulo
     @Override
     public boolean pointBelongs(Point eventPoint) {
-        return Math.sqrt(Math.pow(getCenterPoint().getX() - eventPoint.getX(), 2)) < getARadius() &&
-                Math.sqrt(Math.pow(getCenterPoint().getY() - eventPoint.getY(), 2)) < getBRadius();
+        if (getARadius()==0 || getBRadius()==0)
+            return false;
+        return 1 >= Math.pow(eventPoint.getX()-centerPoint.getX(),2)/Math.pow(getARadius(),2) +
+                    Math.pow(eventPoint.getY()-centerPoint.getY(),2)/Math.pow(getBRadius(),2);
     }
 
     @Override

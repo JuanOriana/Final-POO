@@ -1,8 +1,6 @@
-package backend.model;
+package backend.model.figures;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import java.awt.*;
 
 public class Circle extends Ellipse {
     public Circle(Point centerPoint, double radius,Color  lineColor, Color fillColor, double lineWidth) {
@@ -20,10 +18,5 @@ public class Circle extends Ellipse {
         return getBRadius();
     }
 
-    @Override
-    public boolean pointBelongs(Point eventPoint) {
-        return Math.sqrt(Math.pow(getCenterPoint().getX() - eventPoint.getX(), 2) +
-                Math.pow(getCenterPoint().getY() - eventPoint.getY(), 2)) < getRadius();
-    }
 
 }

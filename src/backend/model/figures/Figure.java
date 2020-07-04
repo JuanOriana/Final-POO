@@ -1,10 +1,11 @@
-package backend.model;
+package backend.model.figures;
 
+import backend.model.Drawable;
+import backend.model.Movable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import sun.font.GraphicComponent;
 
-public abstract class Figure implements Movable, Drawable{
+public abstract class Figure implements Movable, Drawable {
     private final Color SELECTED_COLOR = Color.RED;
     protected Color lineColor,fillColor;
     protected double lineWidth;

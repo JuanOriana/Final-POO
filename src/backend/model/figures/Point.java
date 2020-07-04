@@ -1,4 +1,6 @@
-package backend.model;
+package backend.model.figures;
+
+import backend.model.Movable;
 
 public class Point implements Movable {
 

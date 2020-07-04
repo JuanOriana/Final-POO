@@ -1,11 +1,7 @@
 package frontend;
 
 import backend.CanvasState;
-import backend.model.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import backend.model.figures.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -14,8 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
-import java.util.Map;
 
 public class PaintPane extends BorderPane {
 
@@ -71,6 +65,7 @@ public class PaintPane extends BorderPane {
 		Control[] lineTools = {lineLabel,lineSlider, lineColorPicker};
 		lineSlider.setShowTickMarks(true);
 		lineSlider.setShowTickLabels(true);
+
 		Control[] fillTools = {fillLabel,fillColorPicker};
 
 		VBox toolBox = new VBox(10);
@@ -116,6 +111,7 @@ public class PaintPane extends BorderPane {
 				return ;
 			}
 			Figure newFigure;
+
 			if(rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint, lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
