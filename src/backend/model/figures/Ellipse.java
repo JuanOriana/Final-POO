@@ -60,8 +60,4 @@ public class Ellipse extends Figure {
         return topLeft.getY()>=areaTopLeft.getY() && topLeft.getX()>=areaTopLeft.getX()
                 && bottomRight.getY()<= areaBottomRight.getY() && bottomRight.getX() <= areaBottomRight.getX();
     }
-
-    public static double calculateRadius(double d1, double d2){
-        return Math.abs(d1 - d2)/2;
-    }
 }
