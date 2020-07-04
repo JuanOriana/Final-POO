@@ -128,36 +128,39 @@ public class PaintPane extends BorderPane {
 			if(startPoint == null) {
 				return ;
 			}
-			if((endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) && !lineButton.isSelected()) {
-				return ;
-			}
+			Point upperLeft = Figure.getUpperLeft(startPoint,endPoint);
+			Point bottomRight = Figure.getBottomRight(startPoint,endPoint);
 			Figure newFigure;
 
 			if(rectangleButton.isSelected()) {
-				newFigure = new Rectangle(startPoint, endPoint, lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
+				newFigure = new Rectangle(upperLeft, bottomRight, lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
 			else if(circleButton.isSelected()) {
-				double circleRadius = Circle.calculateRadius(startPoint.getX(),endPoint.getX());
+				double circleRadius = Math.abs(upperLeft.getX() - bottomRight.getX());
 				newFigure = new Circle(startPoint, circleRadius, lineColorPicker.getValue(), fillColorPicker.getValue(),lineSlider.getValue());
 			}
+
 			else if(ellipseButton.isSelected()){
-				double aRadius = Ellipse.calculateRadius(startPoint.getX(),endPoint.getX());
-				double bRadius = Ellipse.calculateRadius(startPoint.getY(),endPoint.getY());
-				newFigure = new Ellipse(new Point(startPoint.getX() + aRadius, startPoint.getY() + bRadius), aRadius,bRadius,
+				double aRadius = Math.abs(upperLeft.getX() - bottomRight.getX())/2;
+				double bRadius = Math.abs(upperLeft.getY() - bottomRight.getY())/2;
+				newFigure = new Ellipse(new Point(upperLeft.getX() + aRadius, upperLeft.getY() + bRadius), aRadius,bRadius,
 						lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
+
 			else if(squareButton.isSelected()){
-				newFigure = new Square(startPoint,endPoint,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
+				newFigure = new Square(upperLeft,bottomRight,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
+
 			else if(lineButton.isSelected()){
 				newFigure = new Line(startPoint,endPoint,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
+
 			else if(selectionButton.isSelected()){
 				selectedFigures = new HashSet<>();
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (Figure figure : canvasState.figures()){
-					if(figure.isWithinArea(startPoint,endPoint) || figure.pointBelongs(startPoint)) {
+					if(figure.isWithinArea(upperLeft,bottomRight) || figure.pointBelongs(startPoint)) {
 						found = true;
 						selectedFigures.add(figure);
 						label.append(figure.toString());

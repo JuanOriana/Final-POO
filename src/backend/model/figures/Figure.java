@@ -39,4 +39,12 @@ public abstract class Figure implements Movable, Drawable {
     public void setLineWidth(double lineWidth) {
         this.lineWidth = lineWidth;
     }
+
+    public static Point getUpperLeft(Point point1, Point point2){
+        return new Point(Math.min(point1.getX(),point2.getX()),Math.min(point1.getY(),point2.getY()));
+    }
+
+    public static Point getBottomRight(Point point1, Point point2){
+        return new Point(Math.max(point1.getX(),point2.getX()),Math.max(point1.getY(),point2.getY()));
+    }
 }
