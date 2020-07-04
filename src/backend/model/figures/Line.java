@@ -17,6 +17,16 @@ public class Line extends Figure {
         return eventPoint==start || eventPoint==end;
     }
 
+
+    @Override
+    public boolean isWithinArea(Point areaTopLeft, Point areaBottomRight) {
+        double maxX = Math.max(start.getX(), end.getX());
+        double maxY = Math.max(start.getY(), end.getY());
+        double minX = Math.min(start.getX(), end.getX());
+        double minY = Math.min(start.getY(), end.getY());
+        return maxY>=areaTopLeft.getY() && minX>=areaTopLeft.getX() && minY<= areaBottomRight.getY() && maxX <= areaBottomRight.getX();
+    }
+
     @Override
     public void draw(GraphicsContext gc, boolean selected) {
         setForDrawing(gc, selected);
