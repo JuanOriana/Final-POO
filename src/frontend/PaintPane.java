@@ -31,9 +31,10 @@ public class PaintPane extends BorderPane {
 	ToggleButton ellipseButton = new ToggleButton("Elipse");
 	ToggleButton squareButton = new ToggleButton("Cuadrado");
 	ToggleButton lineButton = new ToggleButton("Linea");
-	ToggleButton removeButton = new ToggleButton("Borrar");
-	ToggleButton backButton = new ToggleButton("Al Fondo");
-	ToggleButton frontButton = new ToggleButton("Al Frente");
+	Button removeButton = new Button("Borrar");
+	Button backButton = new Button("Al Fondo");
+	Button frontButton = new Button("Al Frente");
+
 
 	// Sliders y color-pickers
 	Slider lineSlider = new Slider(1,50,1);
@@ -59,11 +60,18 @@ public class PaintPane extends BorderPane {
 		this.statusPane = statusPane;
 
 
-		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton, lineButton,removeButton, backButton, frontButton};
+		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton, lineButton};
+		Button[] noTButtonsArr = {removeButton,backButton,frontButton};
 		ToggleGroup tools = new ToggleGroup();
+
 		for (ToggleButton tool : buttonsArr) {
 			tool.setMinWidth(90);
 			tool.setToggleGroup(tools);
+			tool.setCursor(Cursor.HAND);
+		}
+
+		for (Button tool : noTButtonsArr) {
+			tool.setMinWidth(90);
 			tool.setCursor(Cursor.HAND);
 		}
 
@@ -75,6 +83,7 @@ public class PaintPane extends BorderPane {
 
 		VBox toolBox = new VBox(10);
 		toolBox.getChildren().addAll(buttonsArr);
+		toolBox.getChildren().addAll(noTButtonsArr);
 		toolBox.getChildren().addAll(lineTools);
 		toolBox.getChildren().addAll(fillTools);
 		toolBox.setPadding(new Insets(5));
