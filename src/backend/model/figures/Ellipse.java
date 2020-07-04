@@ -52,4 +52,8 @@ public class Ellipse extends Figure {
     public String toString() {
         return String.format("%s [Centro: %s, A: %.2f, B: %.2f]",name,getCenterPoint(), getARadius(),getBRadius());
     }
+
+    public static double calculateRadius(double d1, double d2){
+        return Math.abs(d1 - d2)/2;
+    }
 }

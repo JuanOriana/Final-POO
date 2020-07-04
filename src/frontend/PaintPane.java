@@ -107,7 +107,7 @@ public class PaintPane extends BorderPane {
 			if(startPoint == null) {
 				return ;
 			}
-			if(endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
+			if((endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) && !lineButton.isSelected()) {
 				return ;
 			}
 			Figure newFigure;
@@ -116,12 +116,12 @@ public class PaintPane extends BorderPane {
 				newFigure = new Rectangle(startPoint, endPoint, lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
 			else if(circleButton.isSelected()) {
-				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
+				double circleRadius = Circle.calculateRadius(startPoint.getX(),endPoint.getX());
 				newFigure = new Circle(startPoint, circleRadius, lineColorPicker.getValue(), fillColorPicker.getValue(),lineSlider.getValue());
 			}
 			else if(ellipseButton.isSelected()){
-				double aRadius = Math.abs(endPoint.getX() - startPoint.getX())/2;
-				double bRadius = Math.abs(endPoint.getY() - startPoint.getY())/2;
+				double aRadius = Ellipse.calculateRadius(startPoint.getX(),endPoint.getX());
+				double bRadius = Ellipse.calculateRadius(startPoint.getY(),endPoint.getY());
 				newFigure = new Ellipse(new Point(startPoint.getX() + aRadius, startPoint.getY() + bRadius), aRadius,bRadius,
 						lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
