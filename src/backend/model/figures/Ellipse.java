@@ -57,7 +57,7 @@ public class Ellipse extends Figure {
     public boolean isWithinArea(Point areaTopLeft, Point areaBottomRight) {
         Point topLeft = new Point(centerPoint.getX()-aRadius,centerPoint.getY()+bRadius);
         Point bottomRight = new Point(centerPoint.getX()+aRadius,centerPoint.getY()-bRadius);
-        return topLeft.getY()<=areaTopLeft.getY() && topLeft.getX()>=areaTopLeft.getX()
-                && bottomRight.getY()>+ areaBottomRight.getY() && bottomRight.getX() <= areaTopLeft.getX();
+        return topLeft.getY()>=areaTopLeft.getY() && topLeft.getX()>=areaTopLeft.getX()
+                && bottomRight.getY()<= areaBottomRight.getY() && bottomRight.getX() <= areaBottomRight.getX();
     }
 }

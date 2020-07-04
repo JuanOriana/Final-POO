@@ -37,8 +37,8 @@ public class Rectangle extends Figure {
 
     @Override
     public boolean isWithinArea(Point areaTopLeft, Point areaBottomRight) {
-        return getTopLeft().getY()<=areaTopLeft.getY() && getTopLeft().getX()>=areaTopLeft.getX()
-                && getBottomRight().getY()>+ areaBottomRight.getY() && getBottomRight().getX() <= areaTopLeft.getX();
+        return getTopLeft().getY()>=areaTopLeft.getY() && getTopLeft().getX()>=areaTopLeft.getX()
+                && getBottomRight().getY()<= areaBottomRight.getY() && getBottomRight().getX() <= areaBottomRight.getX();
     }
 
     @Override
