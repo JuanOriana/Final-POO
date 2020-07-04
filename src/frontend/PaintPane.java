@@ -48,8 +48,6 @@ public class PaintPane extends BorderPane {
 	// Dibujar una figura
 	Point startPoint;
 
-	// Seleccionar una figura
-	HashSet<Figure> selectedFigures = new HashSet<>();
 
 	// StatusBar
 	StatusPane statusPane;
@@ -92,47 +90,47 @@ public class PaintPane extends BorderPane {
 		gc.setLineWidth(1);
 
 		fillColorPicker.setOnAction(event -> {
-			if (areSelections()){
-				for (Figure figure : selectedFigures)
+			if (canvasState.areSelections()){
+				for (Figure figure : canvasState.selectedFigures())
 					figure.setFillColor(fillColorPicker.getValue());
 				redrawCanvas();
 			}
 		});
 
 		lineColorPicker.setOnAction(event -> {
-			if (areSelections()){
-				for(Figure figure : selectedFigures)
+			if (canvasState.areSelections()){
+				for(Figure figure : canvasState.selectedFigures())
 					figure.setLineColor(lineColorPicker.getValue());
 				redrawCanvas();
 			}
 		});
 
 		lineSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-			if (areSelections()) {
-				for (Figure figure : selectedFigures)
+			if (canvasState.areSelections()) {
+				for (Figure figure : canvasState.selectedFigures())
 					figure.setLineWidth((Double) newValue);
 				redrawCanvas();
 			}
 		});
 
 		removeButton.setOnAction(event -> {
-			if(areSelections()){
-				canvasState.removeFigure(selectedFigures);
-				selectedFigures= new HashSet<>();
+			if(canvasState.areSelections()){
+				canvasState.removeFigures(canvasState.selectedFigures());
+				canvasState.emptySelections();
 				redrawCanvas();
 			}
 		});
 
 		backButton.setOnAction(event -> {
-			if(areSelections()){
-				canvasState.moveBack(selectedFigures);
+			if(canvasState.areSelections()){
+				canvasState.moveBack(canvasState.selectedFigures());
 				redrawCanvas();
 			}
 		});
 
 		frontButton.setOnAction(event -> {
-			if(areSelections()){
-				canvasState.moveFront(selectedFigures);
+			if(canvasState.areSelections()){
+				canvasState.moveFront(canvasState.selectedFigures());
 				redrawCanvas();
 			}
 		});
@@ -173,14 +171,14 @@ public class PaintPane extends BorderPane {
 				newFigure = new Line(startPoint,endPoint,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
 
-			else if(selectionButton.isSelected()){
-				selectedFigures = new HashSet<>();
+			else if(selectionButton.isSelected() && !canvasState.areSelections()){
+				canvasState.emptySelections();
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (Figure figure : canvasState.figures()){
-					if(figure.isWithinArea(upperLeft,bottomRight) || figure.pointBelongs(startPoint)) {
+					if(figure.isWithinArea(upperLeft,bottomRight)) {
 						found = true;
-						selectedFigures.add(figure);
+						canvasState.selectFigure(figure);
 						label.append(figure.toString());
 					}
 				}
@@ -200,12 +198,35 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 		});
 
+		canvas.setOnMouseClicked(event -> {
+			if(selectionButton.isSelected() && event.isStillSincePress()) {
+				canvasState.emptySelections();
+				// TODO: 4/7/2020 ARREGLAR!!!! 
+				Figure toSelect = null;
+				Point eventPoint = new Point(event.getX(), event.getY());
+				StringBuilder label = new StringBuilder("Se seleccionó: ");
+				for (Figure figure : canvasState.figures()) {
+					if(figure.pointBelongs(eventPoint)) {
+						toSelect = figure;
+						label.append(figure.toString());
+					}
+				}
+				if (toSelect != null) {
+					canvasState.selectFigure(toSelect);
+					statusPane.updateStatus(label.toString());
+				} else {
+					statusPane.updateStatus("Ninguna figura encontrada");
+				}
+				redrawCanvas();
+			}
+		});
+
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
 			for(Figure figure : canvasState.figures()) {
-				if(figureBelongs(figure, eventPoint)) {
+				if(figure.pointBelongs(eventPoint)) {
 					found = true;
 					label.append(figure.toString());
 				}
@@ -222,8 +243,8 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				if(areSelections())
-					for (Figure figure : selectedFigures)
+				if(canvasState.areSelections())
+					for (Figure figure : canvasState.selectedFigures())
 						figure.move(diffX,diffY);
 				redrawCanvas();
 			}
@@ -235,17 +256,10 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
-			boolean isSelected = selectedFigures.contains(figure);
+			boolean isSelected = canvasState.isSelected(figure);
 			figure.draw(gc, isSelected);
 		}
 	}
 
-	boolean figureBelongs(Figure figure, Point eventPoint) {
-		return figure.pointBelongs(eventPoint);
-	}
-
-	boolean areSelections(){
-		return !selectedFigures.isEmpty();
-	}
 
 }
