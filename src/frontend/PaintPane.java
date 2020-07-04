@@ -31,6 +31,8 @@ public class PaintPane extends BorderPane {
 	ToggleButton ellipseButton = new ToggleButton("Elipse");
 	ToggleButton squareButton = new ToggleButton("Cuadrado");
 	ToggleButton lineButton = new ToggleButton("Linea");
+	ToggleButton backButton = new ToggleButton("Al Fondo");
+	ToggleButton frontButton = new ToggleButton("Al Frente");
 
 	// Sliders y color-pickers
 	Slider lineSlider = new Slider(1,50,1);
@@ -56,7 +58,7 @@ public class PaintPane extends BorderPane {
 		this.statusPane = statusPane;
 
 
-		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton, lineButton};
+		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton, lineButton, backButton, frontButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : buttonsArr) {
 			tool.setMinWidth(90);
@@ -99,6 +101,20 @@ public class PaintPane extends BorderPane {
 			if (areSelections()) {
 				for (Figure figure : selectedFigures)
 					figure.setLineWidth((Double) newValue);
+				redrawCanvas();
+			}
+		});
+
+		backButton.setOnAction(event -> {
+			if(areSelections()){
+				canvasState.moveBack(selectedFigures);
+				redrawCanvas();
+			}
+		});
+
+		frontButton.setOnAction(event -> {
+			if(areSelections()){
+				canvasState.moveFront(selectedFigures);
 				redrawCanvas();
 			}
 		});
@@ -162,6 +178,7 @@ public class PaintPane extends BorderPane {
 			startPoint = null;
 			redrawCanvas();
 		});
+
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
@@ -178,7 +195,6 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus(eventPoint.toString());
 			}
 		});
-
 
 		canvas.setOnMouseDragged(event -> {
 			if(selectionButton.isSelected()) {
