@@ -136,7 +136,7 @@ public class PaintPane extends BorderPane {
 			}
 
 			else if(lineButton.isSelected()){
-				newFigure = new Line(upperLeft,bottomRight,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
+				newFigure = new Line(startPoint,endPoint,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
 			}
 
 			else if(selectionButton.isSelected()){
