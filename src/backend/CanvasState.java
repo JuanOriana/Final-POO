@@ -23,15 +23,15 @@ public class CanvasState {
     }
 
     public void moveBack (Collection<Figure> selectedFigures) {
-        removeFigure(selectedFigures);
         for (Figure figure : selectedFigures) {
+            list.remove(figure);
             list.addFirst(figure);
         }
     }
 
     public void moveFront (Collection<Figure> selectedFigures) {
-        removeFigure(selectedFigures);
         for (Figure figure : selectedFigures) {
+            list.remove(figure);
             list.addLast(figure);
         }
     }

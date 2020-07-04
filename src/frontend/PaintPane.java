@@ -109,6 +109,7 @@ public class PaintPane extends BorderPane {
 		removeButton.setOnAction(event -> {
 			if(areSelections()){
 				canvasState.removeFigure(selectedFigures);
+				selectedFigures= new HashSet<>();
 				redrawCanvas();
 			}
 		});
