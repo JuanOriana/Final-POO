@@ -52,4 +52,12 @@ public class Ellipse extends Figure {
     public String toString() {
         return String.format("%s [Centro: %s, A: %.2f, B: %.2f]",name,getCenterPoint(), getARadius(),getBRadius());
     }
+
+    @Override
+    public boolean isWithinArea(Point areaTopLeft, Point areaBottomRight) {
+        Point topLeft = new Point(centerPoint.getX()-aRadius,centerPoint.getY()+bRadius);
+        Point bottomRight = new Point(centerPoint.getX()+aRadius,centerPoint.getY()-bRadius);
+        return topLeft.getY()<=areaTopLeft.getY() && topLeft.getX()>=areaTopLeft.getX()
+                && bottomRight.getY()>+ areaBottomRight.getY() && bottomRight.getX() <= areaTopLeft.getX();
+    }
 }

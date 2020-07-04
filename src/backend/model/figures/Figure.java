@@ -12,6 +12,8 @@ public abstract class Figure implements Movable, Drawable {
 
     public abstract boolean pointBelongs(Point eventPoint);
 
+    public abstract boolean isWithinArea(Point areaTopLeft, Point areaBottomRight);
+
     public Figure(Color lineColor, Color fillColor, double lineWidth) {
         this.lineColor = lineColor;
         this.fillColor = fillColor;

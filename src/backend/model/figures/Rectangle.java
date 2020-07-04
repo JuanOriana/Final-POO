@@ -36,6 +36,12 @@ public class Rectangle extends Figure {
     }
 
     @Override
+    public boolean isWithinArea(Point areaTopLeft, Point areaBottomRight) {
+        return getTopLeft().getY()<=areaTopLeft.getY() && getTopLeft().getX()>=areaTopLeft.getX()
+                && getBottomRight().getY()>+ areaBottomRight.getY() && getBottomRight().getX() <= areaTopLeft.getX();
+    }
+
+    @Override
     public void move(double x, double y) {
         topLeft.move(x,y);
         bottomRight.move(x,y);
