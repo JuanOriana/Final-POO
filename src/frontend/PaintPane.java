@@ -115,22 +115,21 @@ public class PaintPane extends BorderPane {
 
 		removeButton.setOnAction(event -> {
 			if(canvasState.areSelections()){
-				canvasState.removeFigures(canvasState.selectedFigures());
-				canvasState.emptySelections();
+				canvasState.removeSelected();
 				redrawCanvas();
 			}
 		});
 
 		backButton.setOnAction(event -> {
 			if(canvasState.areSelections()){
-				canvasState.moveBack(canvasState.selectedFigures());
+				canvasState.moveBackSelected();
 				redrawCanvas();
 			}
 		});
 
 		frontButton.setOnAction(event -> {
 			if(canvasState.areSelections()){
-				canvasState.moveFront(canvasState.selectedFigures());
+				canvasState.moveFrontSelected();
 				redrawCanvas();
 			}
 		});

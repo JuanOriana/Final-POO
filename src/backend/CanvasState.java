@@ -2,10 +2,7 @@ package backend;
 
 import backend.model.figures.Figure;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
 
 public class CanvasState {
 
@@ -34,22 +31,9 @@ public class CanvasState {
         return new HashSet<>(selectedFigures);
     }
 
-    public void removeFigures(Collection<Figure> figures){
-        figureList.removeAll(figures);
-    }
-
-    public void moveBack (Collection<Figure> selectedFigures) {
-        for (Figure figure : selectedFigures) {
-            figureList.remove(figure);
-            figureList.addFirst(figure);
-        }
-    }
-
-    public void moveFront (Collection<Figure> selectedFigures) {
-        for (Figure figure : selectedFigures) {
-            figureList.remove(figure);
-            figureList.addLast(figure);
-        }
+    public void removeSelected(){
+        figureList.removeAll(selectedFigures);
+        emptySelections();
     }
 
     public boolean isSelected(Figure figure){
@@ -60,5 +44,34 @@ public class CanvasState {
     public boolean areSelections(){
         return !selectedFigures.isEmpty();
     }
+
+    // Esta implementacion es necesaria para conservar el order de la lista (y no depender del orden del set) y
+    // tambien para poder borrar elementos durante la iteracion.
+    public void moveBackSelected () {
+        LinkedList<Figure> append = new LinkedList<>();
+        Iterator<Figure> itr = figureList.iterator();
+        while (itr.hasNext()) {
+            Figure curr = itr.next();
+            if (selectedFigures.contains(curr)) {
+                itr.remove();
+                append.add(curr);
+            }
+        }
+        figureList.addAll(0,append);
+    }
+
+    public void moveFrontSelected() {
+        LinkedList<Figure> append = new LinkedList<>();
+        Iterator<Figure> itr = figureList.iterator();
+        while (itr.hasNext()) {
+            Figure curr = itr.next();
+            if (selectedFigures.contains(curr)) {
+                itr.remove();
+                append.add(curr);
+            }
+        }
+        figureList.addAll(append);
+    }
+
 
 }
