@@ -29,4 +29,9 @@ public class Point implements Movable {
         this.x += x;
         this.y += y;
     }
+
+    public double distanceTo(Point ohterPoint){
+        return Math.sqrt(Math.pow(getX() - ohterPoint.getX(),2) +
+                Math.pow(getY() - ohterPoint.getY(),2));
+    }
 }
