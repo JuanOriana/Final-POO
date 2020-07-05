@@ -1,6 +1,7 @@
 package backend;
 
 import backend.model.figures.Figure;
+import backend.model.figures.Point;
 
 import java.util.*;
 
@@ -71,6 +72,27 @@ public class CanvasState {
             }
         }
         figureList.addAll(append);
+    }
+
+    // Selecciona figuras en un area
+    public void selectByArea(Point start, Point end){
+        Point topLeft = Figure.getTopLeft(start,end);
+        Point bottomRight = Figure.getBottomRight(start,end);
+        for (Figure figure : figures()){
+            if(figure.isWithinArea(topLeft,bottomRight)) {
+                selectFigure(figure);
+            }
+        }
+    }
+
+    // Retorna el ultimo elemento anadido que contiene cierto punto (o null en su defecto)
+    public Figure lastFigureOnPoint(Point point){
+        for(int i = figureList.size()-1 ; i>=0 ;i-- ){
+            Figure figure = figureList.get(i);
+            if (figure.pointBelongs(point))
+                return figure;
+        }
+        return null;
     }
 
 

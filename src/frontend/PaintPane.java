@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.CanvasState;
+import backend.buttons.*;
 import backend.model.figures.*;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
@@ -26,11 +27,11 @@ public class PaintPane extends BorderPane {
 
 	// Botones Barra Izquierda
 	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	ToggleButton rectangleButton = new ToggleButton("Rectángulo");
-	ToggleButton circleButton = new ToggleButton("Círculo");
-	ToggleButton ellipseButton = new ToggleButton("Elipse");
-	ToggleButton squareButton = new ToggleButton("Cuadrado");
-	ToggleButton lineButton = new ToggleButton("Linea");
+	GeneratorToggleButton rectangleButton = new RectangleToggleButton("Rectángulo");
+	GeneratorToggleButton circleButton = new CircleToggleButton("Círculo");
+	GeneratorToggleButton ellipseButton = new EllipseToggleButton("Elipse");
+	GeneratorToggleButton squareButton = new SquareToggleButton("Cuadrado");
+	GeneratorToggleButton lineButton = new LineToggleButton("Linea");
 	Button removeButton = new Button("Borrar");
 	Button backButton = new Button("Al Fondo");
 	Button frontButton = new Button("Al Frente");
@@ -57,20 +58,26 @@ public class PaintPane extends BorderPane {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
 
-
-		ToggleButton[] buttonsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton, lineButton};
-		Button[] noTButtonsArr = {removeButton,backButton,frontButton};
+		ToggleButton[] toolsArr = {selectionButton};
+		GeneratorToggleButton[] generatorButtonsArr = {rectangleButton,circleButton,squareButton,ellipseButton,lineButton};
+		Button[] regularButtonArr = {removeButton,backButton,frontButton};
 		ToggleGroup tools = new ToggleGroup();
 
-		for (ToggleButton tool : buttonsArr) {
+		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
 			tool.setToggleGroup(tools);
 			tool.setCursor(Cursor.HAND);
 		}
 
-		for (Button tool : noTButtonsArr) {
-			tool.setMinWidth(90);
-			tool.setCursor(Cursor.HAND);
+		for (GeneratorToggleButton gen : generatorButtonsArr){
+			gen.setMinWidth(90);
+			gen.setToggleGroup(tools);
+			gen.setCursor(Cursor.HAND);
+		}
+
+		for (Button button : regularButtonArr) {
+			button.setMinWidth(90);
+			button.setCursor(Cursor.HAND);
 		}
 
 		Control[] lineTools = {lineLabel,lineSlider, lineColorPicker};
@@ -80,8 +87,9 @@ public class PaintPane extends BorderPane {
 		Control[] fillTools = {fillLabel,fillColorPicker};
 
 		VBox toolBox = new VBox(10);
-		toolBox.getChildren().addAll(buttonsArr);
-		toolBox.getChildren().addAll(noTButtonsArr);
+		toolBox.getChildren().addAll(toolsArr);
+		toolBox.getChildren().addAll(generatorButtonsArr);
+		toolBox.getChildren().addAll(regularButtonArr);
 		toolBox.getChildren().addAll(lineTools);
 		toolBox.getChildren().addAll(fillTools);
 		toolBox.setPadding(new Insets(5));
@@ -143,76 +151,43 @@ public class PaintPane extends BorderPane {
 			if(startPoint == null) {
 				return ;
 			}
-			Point upperLeft = Figure.getUpperLeft(startPoint,endPoint);
-			Point bottomRight = Figure.getBottomRight(startPoint,endPoint);
 			Figure newFigure;
 
-			if(rectangleButton.isSelected()) {
-				newFigure = new Rectangle(upperLeft, bottomRight, lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
-			}
-			else if(circleButton.isSelected()) {
-				double circleRadius = Math.abs(upperLeft.getX() - bottomRight.getX());
-				newFigure = new Circle(startPoint, circleRadius, lineColorPicker.getValue(), fillColorPicker.getValue(),lineSlider.getValue());
-			}
-
-			else if(ellipseButton.isSelected()){
-				double aRadius = Math.abs(upperLeft.getX() - bottomRight.getX())/2;
-				double bRadius = Math.abs(upperLeft.getY() - bottomRight.getY())/2;
-				newFigure = new Ellipse(new Point(upperLeft.getX() + aRadius, upperLeft.getY() + bRadius), aRadius,bRadius,
-						lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
-			}
-
-			else if(squareButton.isSelected()){
-				newFigure = new Square(upperLeft,bottomRight,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
-			}
-
-			else if(lineButton.isSelected()){
-				newFigure = new Line(startPoint,endPoint,lineColorPicker.getValue(), fillColorPicker.getValue(), lineSlider.getValue());
-			}
-
-			else if(selectionButton.isSelected() && !canvasState.areSelections()){
-				canvasState.emptySelections();
-				boolean found = false;
-				StringBuilder label = new StringBuilder("Se seleccionó: ");
-				for (Figure figure : canvasState.figures()){
-					if(figure.isWithinArea(upperLeft,bottomRight)) {
-						found = true;
-						canvasState.selectFigure(figure);
-						label.append(figure.toString());
-					}
+			for (GeneratorToggleButton generator : generatorButtonsArr){
+				if (generator.isSelected()){
+					newFigure = generator.generate(startPoint,endPoint,lineColorPicker.getValue(),fillColorPicker.getValue(),lineSlider.getValue());
+					canvasState.addFigure(newFigure);
+					startPoint = null;
+					redrawCanvas();
+					return;
 				}
-				if (found) {
-					statusPane.updateStatus(label.toString());
-				} else {
+			}
+
+			if(selectionButton.isSelected() && !canvasState.areSelections()){
+				canvasState.emptySelections();
+				canvasState.selectByArea(startPoint,endPoint);
+				if (!canvasState.areSelections()){
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
+				else{
+					StringBuilder label = new StringBuilder("Se seleccionó: ");
+					for (Figure figure : canvasState.selectedFigures()){
+						label.append(figure.toString());
+					}
+					statusPane.updateStatus(label.toString());
+				}
 				redrawCanvas();
-				return;
 			}
-			else {
-				return ;
-			}
-			canvasState.addFigure(newFigure);
-			startPoint = null;
-			redrawCanvas();
 		});
 
 		canvas.setOnMouseClicked(event -> {
 			if(selectionButton.isSelected() && event.isStillSincePress()) {
-				canvasState.emptySelections();
-				// TODO: 4/7/2020 ARREGLAR!!!! 
-				Figure toSelect = null;
 				Point eventPoint = new Point(event.getX(), event.getY());
-				StringBuilder label = new StringBuilder("Se seleccionó: ");
-				for (Figure figure : canvasState.figures()) {
-					if(figure.pointBelongs(eventPoint)) {
-						toSelect = figure;
-						label.append(figure.toString());
-					}
-				}
+				canvasState.emptySelections();
+				Figure toSelect = canvasState.lastFigureOnPoint(eventPoint);
 				if (toSelect != null) {
 					canvasState.selectFigure(toSelect);
-					statusPane.updateStatus(label.toString());
+					statusPane.updateStatus("Se selecciono: " + toSelect.toString());
 				} else {
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
@@ -259,6 +234,5 @@ public class PaintPane extends BorderPane {
 			figure.draw(gc, isSelected);
 		}
 	}
-
 
 }
