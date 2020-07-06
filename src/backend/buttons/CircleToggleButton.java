@@ -13,9 +13,7 @@ public class CircleToggleButton extends GeneratorToggleButton {
 
     @Override
     public Figure generate(Point start, Point end, Color lineColor, Color fillColor, double lineWidth) {
-        Point topLeft = Figure.getTopLeft(start,end);
-        Point bottomRight = Figure.getBottomRight(start,end);
-        double circleRadius = topLeft.distanceTo(bottomRight);
+        double circleRadius = start.distanceTo(end);
         return new Circle(start, circleRadius, lineColor,fillColor,lineWidth);
     }
 }

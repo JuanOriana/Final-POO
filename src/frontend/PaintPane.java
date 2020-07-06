@@ -12,8 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.util.HashSet;
-
 public class PaintPane extends BorderPane {
 
 	// BackEnd
@@ -164,7 +162,6 @@ public class PaintPane extends BorderPane {
 			}
 
 			if(selectionButton.isSelected() && !canvasState.areSelections()){
-				canvasState.emptySelections();
 				canvasState.selectByArea(startPoint,endPoint);
 				if (!canvasState.areSelections()){
 					statusPane.updateStatus("Ninguna figura encontrada");
@@ -213,16 +210,22 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
+			Point eventPoint = new Point(event.getX(), event.getY());
+			if(eventPoint.isWithinCanvas(canvas)) { statusPane.updateStatus(eventPoint.toString()); }
 			if(selectionButton.isSelected()) {
-				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+				StringBuilder label = new StringBuilder();
 				if(canvasState.areSelections())
-					for (Figure figure : canvasState.selectedFigures())
-						figure.move(diffX,diffY);
+					for (Figure figure : canvasState.selectedFigures()) {
+						figure.move(diffX, diffY);
+						label.append(figure.toString());
+						statusPane.updateStatus(label.toString());
+					}
 				redrawCanvas();
 			}
 		});
+
 		setLeft(toolBox);
 		setRight(canvas);
 	}

@@ -1,6 +1,7 @@
 package backend.model.figures;
 
 import backend.model.Movable;
+import javafx.scene.canvas.Canvas;
 
 public class Point implements Movable {
 
@@ -33,5 +34,10 @@ public class Point implements Movable {
     public double distanceTo(Point ohterPoint){
         return Math.sqrt(Math.pow(getX() - ohterPoint.getX(),2) +
                 Math.pow(getY() - ohterPoint.getY(),2));
+    }
+    //En principio solo se usa para chequear que no se pase de los limites cuando printea el statusPanel
+    public boolean isWithinCanvas(Canvas canvas){
+        return getX() >= 0 && getX() <= canvas.getWidth()
+                && getY() >=0 && getY() <= canvas.getHeight();
     }
 }
