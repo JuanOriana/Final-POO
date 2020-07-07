@@ -36,7 +36,6 @@ public class PaintPane extends BorderPane {
 	Button backButton = new Button("Al Fondo");
 	Button frontButton = new Button("Al Frente");
 
-
 	// Sliders y color-pickers
 	Slider lineSlider = new Slider(1,50,1);
 	ColorPicker lineColorPicker = new ColorPicker(lineColor);
@@ -49,10 +48,8 @@ public class PaintPane extends BorderPane {
 	// Dibujar una figura
 	Point startPoint;
 
-
 	// StatusBar
 	StatusPane statusPane;
-
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
@@ -63,29 +60,31 @@ public class PaintPane extends BorderPane {
 		Button[] regularButtonArr = {removeButton,backButton,frontButton};
 		ToggleGroup tools = new ToggleGroup();
 
+		// Seteo de la visualizacion de los botones
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
 			tool.setToggleGroup(tools);
 			tool.setCursor(Cursor.HAND);
 		}
-
 		for (GeneratorToggleButton gen : generatorButtonsArr){
 			gen.setMinWidth(90);
 			gen.setToggleGroup(tools);
 			gen.setCursor(Cursor.HAND);
 		}
-
 		for (Button button : regularButtonArr) {
 			button.setMinWidth(90);
 			button.setCursor(Cursor.HAND);
 		}
 
+		// Seteo visualizacion de las herramientas de linea
 		Control[] lineTools = {lineLabel,lineSlider, lineColorPicker};
 		lineSlider.setShowTickMarks(true);
 		lineSlider.setShowTickLabels(true);
 
+		// Seteo visualizacion de las herramientas de fill
 		Control[] fillTools = {fillLabel,fillColorPicker};
 
+		// Composicion de la VBox
 		VBox toolBox = new VBox(10);
 		toolBox.getChildren().addAll(toolsArr);
 		toolBox.getChildren().addAll(generatorButtonsArr);
@@ -151,9 +150,9 @@ public class PaintPane extends BorderPane {
 			if(startPoint == null) {
 				return ;
 			}
-			Figure newFigure;
 
 			for (GeneratorToggleButton generator : generatorButtonsArr){
+				Figure newFigure;
 				if (generator.isSelected()){
 					newFigure = generator.generate(startPoint,endPoint,lineColorPicker.getValue(),fillColorPicker.getValue(),lineSlider.getValue());
 					canvasState.addFigure(newFigure);
@@ -162,7 +161,8 @@ public class PaintPane extends BorderPane {
 					return;
 				}
 			}
-
+			// Solo se permite la seleccion multiple en caso de que no haya elementos seleccionados,
+			// ante otro caso, es necesario desseleccionar con un click antes.
 			if(selectionButton.isSelected() && !canvasState.areSelections()){
 				canvasState.emptySelections();
 				canvasState.selectByArea(startPoint,endPoint);
@@ -176,11 +176,14 @@ public class PaintPane extends BorderPane {
 					}
 					statusPane.updateStatus(label.toString());
 				}
+				startPoint = null;
 				redrawCanvas();
 			}
 		});
 
 		canvas.setOnMouseClicked(event -> {
+			/* isStillSincePress evita que esta accion se ejecute aunque el click no haya sido corto
+			   (evita conflictos con el arrastrado). */
 			if(selectionButton.isSelected() && event.isStillSincePress()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				canvasState.emptySelections();
@@ -215,11 +218,8 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseDragged(event -> {
 			if(selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
-				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
-				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
 				if(canvasState.areSelections())
-					for (Figure figure : canvasState.selectedFigures())
-						figure.move(diffX,diffY);
+					canvasState.moveSelected(startPoint,eventPoint);
 				redrawCanvas();
 			}
 		});

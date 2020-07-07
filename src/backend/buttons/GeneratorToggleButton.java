@@ -5,7 +5,9 @@ import backend.model.figures.Point;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.paint.Color;
 
-
+/**
+ *  Tipo de ToggleButton que es capaz de generar figuras.
+ */
 public abstract class GeneratorToggleButton extends ToggleButton {
 
     public GeneratorToggleButton(String text) {
