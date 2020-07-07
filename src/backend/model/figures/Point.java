@@ -2,6 +2,8 @@ package backend.model.figures;
 
 import backend.model.Movable;
 
+import java.util.Objects;
+
 public class Point implements Movable {
 
     private double x, y;
@@ -30,8 +32,24 @@ public class Point implements Movable {
         this.y += y;
     }
 
-    public double distanceTo(Point ohterPoint){
-        return Math.sqrt(Math.pow(getX() - ohterPoint.getX(),2) +
-                Math.pow(getY() - ohterPoint.getY(),2));
+    public double distanceTo(Point otherPoint){
+        return Math.sqrt(Math.pow(getX() - otherPoint.getX(),2) +
+                Math.pow(getY() - otherPoint.getY(),2));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Point))
+            return false;
+        Point point = (Point) o;
+        return Double.compare(point.x, x) == 0 && Double.compare(point.y, y) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
+
 }

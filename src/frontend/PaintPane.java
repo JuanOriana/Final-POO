@@ -164,7 +164,6 @@ public class PaintPane extends BorderPane {
 			// Solo se permite la seleccion multiple en caso de que no haya elementos seleccionados,
 			// ante otro caso, es necesario desseleccionar con un click antes.
 			if(selectionButton.isSelected() && !canvasState.areSelections()){
-				canvasState.emptySelections();
 				canvasState.selectByArea(startPoint,endPoint);
 				if (!canvasState.areSelections()){
 					statusPane.updateStatus("Ninguna figura encontrada");
