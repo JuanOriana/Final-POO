@@ -49,7 +49,7 @@ public class Ellipse extends Figure {
 
     @Override
     public String toString() {
-        return String.format("%s [Centro: %s, A: %.2f, B: %.2f]",name,getCenterPoint(), getARadius(),getBRadius());
+        return String.format("%s [Centro: %s, Radio-A: %.2f, Radio-B: %.2f]",name,getCenterPoint(), getARadius(),getBRadius());
     }
 
     @Override

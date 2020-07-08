@@ -95,27 +95,21 @@ public class PaintPane extends BorderPane {
 		gc.setLineWidth(1);
 
 		fillColorPicker.setOnAction(event -> {
-			if (canvasState.areSelections()){
-				for (Figure figure : canvasState.selectedFigures())
-					figure.setFillColor(fillColorPicker.getValue());
-				redrawCanvas();
-			}
+			for (Figure figure : canvasState.selectedFigures())
+				figure.setFillColor(fillColorPicker.getValue());
+			redrawCanvas();
 		});
 
 		lineColorPicker.setOnAction(event -> {
-			if (canvasState.areSelections()){
-				for(Figure figure : canvasState.selectedFigures())
-					figure.setLineColor(lineColorPicker.getValue());
-				redrawCanvas();
-			}
+			for(Figure figure : canvasState.selectedFigures())
+				figure.setLineColor(lineColorPicker.getValue());
+			redrawCanvas();
 		});
 
 		lineSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-			if (canvasState.areSelections()) {
-				for (Figure figure : canvasState.selectedFigures())
-					figure.setLineWidth((Double) newValue);
-				redrawCanvas();
-			}
+			for (Figure figure : canvasState.selectedFigures())
+				figure.setLineWidth((Double) newValue);
+			redrawCanvas();
 		});
 
 		removeButton.setOnAction(event -> {
@@ -145,6 +139,7 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
+
 			if(startPoint == null) {
 				return ;
 			}

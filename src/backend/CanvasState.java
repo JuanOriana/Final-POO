@@ -60,31 +60,30 @@ public class CanvasState {
     // Esta implementacion es necesaria para conservar el order de la lista (y no depender del orden del set) y
     // tambien para poder borrar elementos durante la iteracion.
 
-    /** Mueve todas las figuras seleccionaas al principio de la lista */
-    public void moveBackSelected () {
-        LinkedList<Figure> append = new LinkedList<>();
+    /** Remueve los seleccionados de la lista de figuras (MANTIENIENDOLOS SELECCIONADOS)
+     *  Y los devuelve en una lista en el orden de las figuras originales
+     */
+    private List<Figure> removeAndRetrieveSelected(){
+        LinkedList<Figure> selected = new LinkedList<>();
         Iterator<Figure> itr = figureList.iterator();
         while (itr.hasNext()) {
             Figure curr = itr.next();
             if (selectedFigures.contains(curr)) {
                 itr.remove();
-                append.add(curr);
+                selected.add(curr);
             }
         }
+        return selected;
+    }
+    /** Mueve todas las figuras seleccionaas al principio de la lista */
+    public void moveBackSelected () {
+        List<Figure> append = removeAndRetrieveSelected();
         figureList.addAll(0,append);
     }
 
     /** Mueve todas las figuras seleccionadas al final de la lista */
     public void moveFrontSelected() {
-        LinkedList<Figure> append = new LinkedList<>();
-        Iterator<Figure> itr = figureList.iterator();
-        while (itr.hasNext()) {
-            Figure curr = itr.next();
-            if (selectedFigures.contains(curr)) {
-                itr.remove();
-                append.add(curr);
-            }
-        }
+        List<Figure> append =removeAndRetrieveSelected();
         figureList.addAll(append);
     }
 
