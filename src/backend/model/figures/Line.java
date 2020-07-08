@@ -29,8 +29,8 @@ public class Line extends Figure {
     }
 
     @Override
-    public void draw(GraphicsContext gc, boolean selected) {
-        setForDrawing(gc, selected);
+    public void draw(GraphicsContext gc) {
+        setForDrawing(gc);
         gc.strokeLine(getStart().getX(),getStart().getY(),getEnd().getX(),getEnd().getY());
     }
 

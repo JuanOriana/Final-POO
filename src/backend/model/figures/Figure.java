@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
  * Interfaz que representa una figura geometrica en el espacio bidimensional
  */
 public abstract class Figure implements Movable, Drawable {
-    private final Color SELECTED_COLOR = Color.RED;
     protected Color lineColor,fillColor;
     protected double lineWidth;
     protected String name;
@@ -31,11 +30,10 @@ public abstract class Figure implements Movable, Drawable {
         this.lineWidth = lineWidth;
     }
 
-    protected void setForDrawing(GraphicsContext gc, boolean selected){
+    protected void setForDrawing(GraphicsContext gc){
         gc.setLineWidth(lineWidth);
         gc.setFill(fillColor);
-        Color color = selected?SELECTED_COLOR:lineColor;
-        gc.setStroke(color);
+        gc.setStroke(lineColor);
 
     }
 
@@ -49,6 +47,18 @@ public abstract class Figure implements Movable, Drawable {
 
     public void setLineWidth(double lineWidth) {
         this.lineWidth = lineWidth;
+    }
+
+    public Color getLineColor() {
+        return lineColor;
+    }
+
+    public Color getFillColor() {
+        return fillColor;
+    }
+
+    public double getLineWidth() {
+        return lineWidth;
     }
 
     /**

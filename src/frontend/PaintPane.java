@@ -21,6 +21,7 @@ public class PaintPane extends BorderPane {
 	Canvas canvas = new Canvas(800, 600);
 	GraphicsContext gc = canvas.getGraphicsContext2D();
 	Color lineColor = Color.BLACK;
+	Color SELECTED_COLOR = Color.RED;
 	Color fillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
@@ -222,8 +223,14 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
-			boolean isSelected = canvasState.isSelected(figure);
-			figure.draw(gc, isSelected);
+			if(canvasState.isSelected(figure)){
+				Color originalColor = figure.getLineColor();
+				figure.setLineColor(SELECTED_COLOR);
+				figure.draw(gc);
+				figure.setLineColor(originalColor);
+			}
+			else
+				figure.draw(gc);
 		}
 	}
 

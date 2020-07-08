@@ -36,8 +36,8 @@ public class Ellipse extends Figure {
     }
 
     @Override
-    public void draw(GraphicsContext gc, boolean selected) {
-        setForDrawing(gc,selected);
+    public void draw(GraphicsContext gc) {
+        setForDrawing(gc);
         gc.fillOval(getCenterPoint().getX() - getARadius(), getCenterPoint().getY() - getBRadius(), getARadius()*2, getBRadius()*2);
         gc.strokeOval(getCenterPoint().getX() - getARadius(), getCenterPoint().getY() - getBRadius(), getARadius()*2, getBRadius()*2);
     }
