@@ -30,8 +30,14 @@ public class Point implements Movable {
         this.y += y;
     }
 
-    public double distanceTo(Point ohterPoint){
-        return Math.sqrt(Math.pow(getX() - ohterPoint.getX(),2) +
-                Math.pow(getY() - ohterPoint.getY(),2));
+    public double distanceTo(Point otherPoint){
+        return Math.sqrt(Math.pow(getX() - otherPoint.getX(),2) +
+                Math.pow(getY() - otherPoint.getY(),2));
     }
+
+    public double xDistanceTo(Point otherPoint){
+        return Math.abs(getX() - otherPoint.getX());
+    }
+
+
 }

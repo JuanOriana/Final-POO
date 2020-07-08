@@ -10,6 +10,7 @@ public class Line extends Figure {
         super(lineColor,fillColor,lineWidth);
         this.start = start;
         this.end = end;
+        name = "Linea";
 
     }
     @Override

@@ -6,7 +6,6 @@ import javafx.scene.paint.Color;
 public class Ellipse extends Figure {
     protected final Point centerPoint;
     protected final double aRadius, bRadius;
-    protected String name;
 
     public Ellipse(Point centerPoint, double radiusA, double radiusB, Color lineColor, Color fillColor, double lineWidth) {
         super(lineColor,fillColor,lineWidth);

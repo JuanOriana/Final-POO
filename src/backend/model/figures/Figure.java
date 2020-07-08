@@ -12,6 +12,7 @@ public abstract class Figure implements Movable, Drawable {
     private final Color SELECTED_COLOR = Color.RED;
     protected Color lineColor,fillColor;
     protected double lineWidth;
+    protected String name;
 
     /**
      * Devuelve true si el punto es parte de la figura
