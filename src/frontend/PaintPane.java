@@ -141,7 +141,7 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
 
-			if(startPoint == null) {
+			if(startPoint == null || startPoint.equals(endPoint)) {
 				return ;
 			}
 
@@ -155,8 +155,8 @@ public class PaintPane extends BorderPane {
 					return;
 				}
 			}
-			// Solo se permite la seleccion multiple en caso de que no haya elementos seleccionados,
-			// ante otro caso, es necesario desseleccionar con un click antes.
+			/* Solo se permite la seleccion multiple en caso de que no haya elementos seleccionados,
+			  ante otro caso, es necesario deseleccionar con un click antes. */
 			if(selectionButton.isSelected() && !canvasState.areSelections()){
 				canvasState.selectByArea(startPoint,endPoint);
 				if (!canvasState.areSelections()){

@@ -6,8 +6,10 @@ import javafx.scene.paint.Color;
 public class Line extends Figure {
     private final Point start, end;
 
-    public Line(Point start, Point end, Color lineColor, Color fillColor, double lineWidth) {
-        super(lineColor,fillColor,lineWidth);
+    public Line(Point start, Point end, Color lineColor, double lineWidth) {
+        super(lineColor, Color.BLACK,lineWidth);
+        if (start.equals(end))
+            throw new IllegalFigureException();
         this.start = start;
         this.end = end;
         name = "Linea";
@@ -29,10 +31,18 @@ public class Line extends Figure {
     }
 
     @Override
+    protected void setForDrawing(GraphicsContext gc) {
+        gc.setLineWidth(lineWidth);
+        gc.setStroke(lineColor);
+    }
+
+    @Override
     public void draw(GraphicsContext gc) {
         setForDrawing(gc);
         gc.strokeLine(getStart().getX(),getStart().getY(),getEnd().getX(),getEnd().getY());
     }
+
+
 
     @Override
     public void move(double x, double y) {

@@ -9,6 +9,8 @@ public class Rectangle extends Figure {
 
     public Rectangle(Point topLeft, Point bottomRight, Color lineColor, Color fillColor, double lineWidth) {
         super(lineColor,fillColor,lineWidth);
+        if (topLeft.equals(bottomRight))
+            throw new IllegalFigureException();
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
         name = "Rectangulo";

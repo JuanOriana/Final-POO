@@ -32,6 +32,9 @@ public class Point implements Movable {
         this.y += y;
     }
 
+    /**
+     * Devuelve la distancia pitagorica de este punto a otro
+     */
     public double distanceTo(Point otherPoint){
         return Math.sqrt(Math.pow(getX() - otherPoint.getX(),2) +
                 Math.pow(getY() - otherPoint.getY(),2));
@@ -47,6 +50,9 @@ public class Point implements Movable {
         return Double.compare(point.x, x) == 0 && Double.compare(point.y, y) == 0;
     }
 
+    /**
+     * Devuelve la distancia horizontal de este punto a otro
+     */
     public double xDistanceTo(Point otherPoint){
         return Math.abs(getX() - otherPoint.getX());
     }

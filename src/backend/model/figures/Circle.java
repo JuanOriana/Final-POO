@@ -5,6 +5,8 @@ import javafx.scene.paint.Color;
 public class Circle extends Ellipse {
     public Circle(Point centerPoint, double radius,Color  lineColor, Color fillColor, double lineWidth) {
         super(centerPoint,radius,radius, lineColor, fillColor, lineWidth);
+        if (radius == 0.0)
+            throw new IllegalFigureException();
         name = "Circulo";
     }
 

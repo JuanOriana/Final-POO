@@ -13,6 +13,6 @@ public class LineToggleButton extends GeneratorToggleButton{
 
     @Override
     public Figure generate(Point start, Point end, Color lineColor, Color fillColor, double lineWidth) {
-        return new Line(start,end,lineColor,fillColor,lineWidth);
+        return new Line(start,end,lineColor,lineWidth);
     }
 }

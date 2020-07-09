@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
  * Interfaz que representa una figura geometrica en el espacio bidimensional
  */
 public abstract class Figure implements Movable, Drawable {
+
     protected Color lineColor,fillColor;
     protected double lineWidth;
     protected String name;

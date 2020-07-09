@@ -57,13 +57,14 @@ public class CanvasState {
         return !selectedFigures.isEmpty();
     }
 
-    // Esta implementacion es necesaria para conservar el order de la lista (y no depender del orden del set) y
+    // La siguiente implementacion es necesaria para conservar el order de la lista (y no depender del orden del set) y
     // tambien para poder borrar elementos durante la iteracion.
 
-    /** Remueve los seleccionados de la lista de figuras (MANTIENIENDOLOS SELECCIONADOS)
-     *  Y los devuelve en una lista en el orden de las figuras originales
+    /**
+     *  Remueve los seleccionados de la lista de figuras (MANTIENIENDOLOS SELECCIONADOS)
+     *  Y los devuelve en una lista en el orden de las figuras originales.
      */
-    private List<Figure> removeAndRetrieveSelected(){
+    private List<Figure> extractAndRetrieveSelected(){
         LinkedList<Figure> selected = new LinkedList<>();
         Iterator<Figure> itr = figureList.iterator();
         while (itr.hasNext()) {
@@ -77,13 +78,13 @@ public class CanvasState {
     }
     /** Mueve todas las figuras seleccionaas al principio de la lista */
     public void moveBackSelected () {
-        List<Figure> append = removeAndRetrieveSelected();
+        List<Figure> append = extractAndRetrieveSelected();
         figureList.addAll(0,append);
     }
 
     /** Mueve todas las figuras seleccionadas al final de la lista */
     public void moveFrontSelected() {
-        List<Figure> append =removeAndRetrieveSelected();
+        List<Figure> append = extractAndRetrieveSelected();
         figureList.addAll(append);
     }
 
@@ -118,7 +119,6 @@ public class CanvasState {
         double diffY = (end.getY() - start.getY()) / MOVE_SPEED;
         for (Figure figure : selectedFigures())
             figure.move(diffX,diffY);
-
     }
 
 
