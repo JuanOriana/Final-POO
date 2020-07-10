@@ -9,11 +9,11 @@ public class CanvasState {
 
     private final static double MOVE_SPEED =100.0;
     private final LinkedList<Figure> figureList = new LinkedList<>();
-    HashSet<Figure> selectedFigures = new HashSet<>();
+    private HashSet<Figure> selectedFigures = new HashSet<>();
 
     /**
      * Anade una figura al canvas
-     * @param figure
+     * @param figure la figura a anadir
      */
     public void addFigure(Figure figure) {
         figureList.add(figure);
@@ -21,7 +21,7 @@ public class CanvasState {
 
     /**
      * Selecciona una figura, de estar en el canvas.
-     * @param figure
+     * @param figure la figura a seleccionar
      */
     public void selectFigure(Figure figure){
         if (figureList.contains(figure)){
@@ -111,8 +111,8 @@ public class CanvasState {
 
     /**
      * Mueve todas las figuras seleccionadas en relacion al vector generado por dos puntos
-     * @param start
-     * @param end
+     * @param start raiz del vector
+     * @param end punta del vector
      */
     public void moveSelected(Point start, Point end){
         double diffX = (end.getX() - start.getX()) / MOVE_SPEED;
