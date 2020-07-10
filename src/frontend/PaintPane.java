@@ -54,25 +54,27 @@ public class PaintPane extends BorderPane {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
 
+		ButtonBase[] allButtons = {selectionButton,circleButton,squareButton,ellipseButton,lineButton,removeButton,backButton,frontButton};
 		ToggleButton[] toolsArr = {selectionButton};
 		GeneratorToggleButton[] generatorButtonsArr = {rectangleButton,circleButton,squareButton,ellipseButton,lineButton};
 		Button[] regularButtonArr = {removeButton,backButton,frontButton};
 		ToggleGroup tools = new ToggleGroup();
 
 		// Seteo de la visualizacion de los botones
-		for (ToggleButton tool : toolsArr) {
-			tool.setMinWidth(90);
-			tool.setToggleGroup(tools);
-			tool.setCursor(Cursor.HAND);
-		}
-		for (GeneratorToggleButton gen : generatorButtonsArr){
-			gen.setMinWidth(90);
-			gen.setToggleGroup(tools);
-			gen.setCursor(Cursor.HAND);
-		}
-		for (Button button : regularButtonArr) {
+		for (ButtonBase button : allButtons){
 			button.setMinWidth(90);
 			button.setCursor(Cursor.HAND);
+		}
+		for (ToggleButton tool : toolsArr) {
+			tool.setStyle("-fx-base: #ff5544; -fx-text-fill: #ffffff;");
+			tool.setToggleGroup(tools);
+		}
+		for (GeneratorToggleButton gen : generatorButtonsArr){
+			gen.setStyle("-fx-base: #5544ff; -fx-text-fill: #ffffff;");
+			gen.setToggleGroup(tools);
+		}
+		for (Button button : regularButtonArr) {
+			button.setStyle("-fx-base: #ffaa00;");
 		}
 
 		// Seteo visualizacion de las herramientas de linea
@@ -85,13 +87,11 @@ public class PaintPane extends BorderPane {
 
 		// Composicion de la VBox
 		VBox toolBox = new VBox(10);
-		toolBox.getChildren().addAll(toolsArr);
-		toolBox.getChildren().addAll(generatorButtonsArr);
-		toolBox.getChildren().addAll(regularButtonArr);
+		toolBox.getChildren().addAll(allButtons);
 		toolBox.getChildren().addAll(lineTools);
 		toolBox.getChildren().addAll(fillTools);
 		toolBox.setPadding(new Insets(5));
-		toolBox.setStyle("-fx-background-color: #999");
+		toolBox.setStyle("-fx-background-color: #777");
 		toolBox.setPrefWidth(100);
 		gc.setLineWidth(1);
 
@@ -220,7 +220,7 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
-	void redrawCanvas() {
+	private void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
 			if(canvasState.isSelected(figure)){
@@ -233,5 +233,4 @@ public class PaintPane extends BorderPane {
 				figure.draw(gc);
 		}
 	}
-
 }

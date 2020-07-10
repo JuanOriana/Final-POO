@@ -60,6 +60,6 @@ public class Line extends Figure {
 
     @Override
     public String toString() {
-        return String.format("%s [ %s , %s ]", "Linea", getStart(), getStart());
+        return String.format("%s [ %s , %s ]", "Linea", getStart(), getEnd());
     }
 }
