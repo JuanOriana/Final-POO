@@ -15,46 +15,47 @@ import javafx.scene.paint.Color;
 public class PaintPane extends BorderPane {
 
 	// BackEnd
-	CanvasState canvasState;
+	private final CanvasState canvasState;
 
 	// Canvas y relacionados
-	Canvas canvas = new Canvas(800, 600);
-	GraphicsContext gc = canvas.getGraphicsContext2D();
-	Color lineColor = Color.BLACK;
-	Color SELECTED_COLOR = Color.RED;
-	Color fillColor = Color.YELLOW;
-
-	// Botones Barra Izquierda
-	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	GeneratorToggleButton rectangleButton = new RectangleToggleButton("Rectángulo");
-	GeneratorToggleButton circleButton = new CircleToggleButton("Círculo");
-	GeneratorToggleButton ellipseButton = new EllipseToggleButton("Elipse");
-	GeneratorToggleButton squareButton = new SquareToggleButton("Cuadrado");
-	GeneratorToggleButton lineButton = new LineToggleButton("Linea");
-	Button removeButton = new Button("Borrar");
-	Button backButton = new Button("Al Fondo");
-	Button frontButton = new Button("Al Frente");
-
-	// Sliders y color-pickers
-	Slider lineSlider = new Slider(1,50,1);
-	ColorPicker lineColorPicker = new ColorPicker(lineColor);
-	ColorPicker fillColorPicker = new ColorPicker(fillColor);
-
-	// Labels
-	Label lineLabel = new Label("Borde");
-	Label fillLabel = new Label("Relleno");
+	private final Canvas canvas = new Canvas(800, 600);
+	private GraphicsContext gc = canvas.getGraphicsContext2D();
+	private final static Color LINE_COLOR = Color.BLACK;
+	private final static Color SELECTED_COLOR = Color.RED;
+	private final static Color FILL_COLOR = Color.YELLOW;
 
 	// Dibujar una figura
-	Point startPoint;
+	private Point startPoint;
 
 	// StatusBar
-	StatusPane statusPane;
+	private final StatusPane statusPane;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
 
-		ButtonBase[] allButtons = {selectionButton,rectangleButton,circleButton,squareButton,ellipseButton,lineButton,removeButton,backButton,frontButton};
+		// Botones Barra Izquierda
+		ToggleButton selectionButton = new ToggleButton("Seleccionar");
+		GeneratorToggleButton rectangleButton = new RectangleToggleButton("Rectángulo");
+		GeneratorToggleButton circleButton = new CircleToggleButton("Círculo");
+		GeneratorToggleButton ellipseButton = new EllipseToggleButton("Elipse");
+		GeneratorToggleButton squareButton = new SquareToggleButton("Cuadrado");
+		GeneratorToggleButton lineButton = new LineToggleButton("Linea");
+		Button removeButton = new Button("Borrar");
+		Button backButton = new Button("Al Fondo");
+		Button frontButton = new Button("Al Frente");
+
+		// Sliders y color-pickers
+		Slider lineSlider = new Slider(1,50,1);
+		ColorPicker lineColorPicker = new ColorPicker(LINE_COLOR);
+		ColorPicker fillColorPicker = new ColorPicker(FILL_COLOR);
+
+		// Labels
+		Label lineLabel = new Label("Borde");
+		Label fillLabel = new Label("Relleno");
+
+		ButtonBase[] allButtons = {selectionButton,rectangleButton,circleButton,squareButton,ellipseButton,
+									lineButton,removeButton,backButton,frontButton};
 		ToggleButton[] toolsArr = {selectionButton};
 		GeneratorToggleButton[] generatorButtonsArr = {rectangleButton,circleButton,squareButton,ellipseButton,lineButton};
 		Button[] regularButtonArr = {removeButton,backButton,frontButton};
