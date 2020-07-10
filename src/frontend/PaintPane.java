@@ -54,7 +54,7 @@ public class PaintPane extends BorderPane {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
 
-		ButtonBase[] allButtons = {selectionButton,circleButton,squareButton,ellipseButton,lineButton,removeButton,backButton,frontButton};
+		ButtonBase[] allButtons = {selectionButton,rectangleButton,circleButton,squareButton,ellipseButton,lineButton,removeButton,backButton,frontButton};
 		ToggleButton[] toolsArr = {selectionButton};
 		GeneratorToggleButton[] generatorButtonsArr = {rectangleButton,circleButton,squareButton,ellipseButton,lineButton};
 		Button[] regularButtonArr = {removeButton,backButton,frontButton};
