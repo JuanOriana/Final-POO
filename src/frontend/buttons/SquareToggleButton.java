@@ -1,4 +1,4 @@
-package backend.buttons;
+package frontend.buttons;
 
 import backend.model.figures.Figure;
 import backend.model.figures.Point;
@@ -14,8 +14,8 @@ public class SquareToggleButton extends GeneratorToggleButton {
     @Override
     public Figure generate(Point start, Point end, Color lineColor, Color fillColor, double lineWidth) {
         Point topLeft = Figure.getTopLeft(start,end);
-        Point areaBottomRight = Figure.getBottomRight(start,end);
-        double side =  topLeft.xDistanceTo(areaBottomRight);
+        Point BottomRight = Figure.getBottomRight(start,end);
+        double side =  topLeft.xDistanceTo(BottomRight);
         return new Square(topLeft,side,lineColor,fillColor,lineWidth);
     }
 }

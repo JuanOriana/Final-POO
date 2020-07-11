@@ -1,9 +1,8 @@
-package backend.buttons;
+package frontend.buttons;
 
 import backend.model.figures.Ellipse;
 import backend.model.figures.Figure;
 import backend.model.figures.Point;
-import backend.model.figures.Rectangle;
 import javafx.scene.paint.Color;
 
 public class EllipseToggleButton extends GeneratorToggleButton {

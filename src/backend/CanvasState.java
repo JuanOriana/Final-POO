@@ -47,6 +47,7 @@ public class CanvasState {
         figureList.removeAll(selectedFigures);
         emptySelections();
     }
+
     /** Retorna true si una figura determinada esta seleccionada */
     public boolean isSelected(Figure figure){
         return selectedFigures.contains(figure);
@@ -65,7 +66,7 @@ public class CanvasState {
      *  Y los devuelve en una lista en el orden de las figuras originales.
      */
     private List<Figure> extractAndRetrieveSelected(){
-        LinkedList<Figure> selected = new LinkedList<>();
+        List<Figure> selected = new LinkedList<>();
         Iterator<Figure> itr = figureList.iterator();
         while (itr.hasNext()) {
             Figure curr = itr.next();

@@ -5,6 +5,7 @@ package backend.model;
  */
 @FunctionalInterface
 public interface Movable {
+
     /** Mueve el elemento en la direccion vectorial que representa el punto (x,y) en relacion al origen.
      *  NO mueve el objeto a la posicion (x,y)
      */

@@ -1,4 +1,4 @@
-package backend.buttons;
+package frontend.buttons;
 
 import backend.model.figures.Circle;
 import backend.model.figures.Figure;

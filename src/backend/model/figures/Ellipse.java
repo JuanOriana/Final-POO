@@ -7,11 +7,11 @@ public class Ellipse extends Figure {
     protected final Point centerPoint;
     protected final double aRadius, bRadius;
 
-    public Ellipse(Point centerPoint, double radiusA, double radiusB, Color lineColor, Color fillColor, double lineWidth) {
+    public Ellipse(Point centerPoint, double aRadius, double bRadius, Color lineColor, Color fillColor, double lineWidth) {
         super(lineColor,fillColor,lineWidth);
         this.centerPoint = centerPoint;
-        this.aRadius = radiusA;
-        this.bRadius = radiusB;
+        this.aRadius = aRadius;
+        this.bRadius = bRadius;
         name = "Elipse";
     }
 

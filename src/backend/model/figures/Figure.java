@@ -5,8 +5,6 @@ import backend.model.Movable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
-
 /**
  * Interfaz que representa una figura geometrica en el espacio bidimensional
  */
@@ -28,7 +26,7 @@ public abstract class Figure implements Movable, Drawable {
     public abstract boolean isWithinArea(Point areaTopLeft, Point areaBottomRight);
 
     public Figure(Color lineColor, Color fillColor, double lineWidth) {
-        if (lineWidth <= 0)
+        if (lineWidth < 0)
             throw new IllegalFigureException();
         this.lineColor = lineColor;
         this.fillColor = fillColor;
@@ -83,3 +81,4 @@ public abstract class Figure implements Movable, Drawable {
         return new Point(Math.max(point1.getX(),point2.getX()),Math.max(point1.getY(),point2.getY()));
     }
 }
+
